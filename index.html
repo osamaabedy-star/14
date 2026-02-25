@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📘 تقييم متقدم في الأمن السيبراني</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', 'Cairo', 'Roboto', sans-serif;
+    }
+    body {
+      background: linear-gradient(145deg, #e0e5ec 0%, #b0bec5 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .app-container {
+      max-width: 1200px;
+      width: 100%;
+      background: #f5f7fa;
+      border-radius: 32px;
+      box-shadow: 20px 20px 40px rgba(0, 0, 0, 0.2), -8px -8px 16px rgba(255, 255, 255, 0.7);
+      overflow: hidden;
+      border: 1px solid #cfd8dc;
+    }
+    header {
+      background: #1e2b3c;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      border-bottom: 3px solid #546e7a;
+    }
+    .institution-area {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .uni-logo {
+      font-size: 2.5rem;
+      background: #263238;
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #90a4ae;
+    }
+    .uni-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #eceff1;
+      background: #37474f;
+      padding: 0.4rem 1.5rem;
+      border-radius: 40px;
+      letter-spacing: 0.5px;
+    }
+    .lecturer-badge {
+      background: #2c3e50;
+      color: #b0bec5;
+      padding: 0.5rem 1.8rem;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border: 1px solid #546e7a;
+    }
+    .main-content {
+      padding: 2rem 2rem;
+    }
+    .welcome-screen {
+      text-align: center;
+    }
+    .input-group {
+      margin: 2rem auto;
+      max-width: 450px;
+    }
+    .input-group label {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #263238;
+      display: block;
+      margin-bottom: 8px;
+      text-align: right;
+    }
+    .student-input {
+      width: 100%;
+      padding: 14px 20px;
+      font-size: 1.2rem;
+      border: 2px solid #546e7a;
+      border-radius: 50px;
+      outline: none;
+      background: #ffffff;
+      transition: 0.15s;
+      text-align: center;
+    }
+    .student-input:focus {
+      border-color: #1e2b3c;
+      box-shadow: 0 0 0 3px rgba(30,43,60,0.2);
+    }
+    .topics-panel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 40px;
+    }
+    .topic-btn {
+      background: #2c3e50;
+      color: white;
+      border: none;
+      padding: 18px 32px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #1a252f;
+      transition: 0.1s ease;
+      flex: 0 1 auto;
+      min-width: 240px;
+      border: 1px solid #90a4ae;
+    }
+    .topic-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #1a252f;
+    }
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      background: #263238;
+      padding: 12px 30px;
+      border-radius: 50px;
+      margin-bottom: 30px;
+      font-weight: 500;
+      font-size: 1.2rem;
+      color: #cfd8dc;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .timer {
+      background: #37474f;
+      color: #ffb74d;
+      padding: 6px 30px;
+      border-radius: 40px;
+      font-size: 2rem;
+      font-family: 'Courier New', monospace;
+      direction: ltr;
+    }
+    .score {
+      background: #1e2b3c;
+      color: #a5d6a5;
+      padding: 6px 30px;
+      border-radius: 40px;
+    }
+    .question-box {
+      background: #eceff1;
+      border-radius: 40px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 2px solid #b0bec5;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .question-text {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #102027;
+      line-height: 1.5;
+    }
+    /* تعديل شبكة الخيارات لتكون 4 أعمدة على الكبير، 2 على المتوسط، 1 على الصغير */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin: 30px 0;
+    }
+    @media (max-width: 992px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 576px) {
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .option {
+      background: #dde3e9;
+      border: 2px solid #607d8b;
+      border-radius: 60px;
+      padding: 12px 15px;   /* تصغير الحشو */
+      font-size: 1.1rem;    /* تصغير الخط قليلاً */
+      font-weight: 500;
+      color: #1c313a;
+      cursor: pointer;
+      transition: 0.1s;
+      box-shadow: 0 4px 0 #3e5a6b;
+      text-align: right;
+      word-break: break-word; /* لتفادي تجاوز النص */
+    }
+    .option.correct {
+      background: #a5d6a5;
+      border-color: #2e7d32;
+      box-shadow: 0 2px 0 #1b5e20;
+      transform: translateY(2px);
+    }
+    .option.wrong {
+      background: #ef9a9a;
+      border-color: #b71c1c;
+      box-shadow: 0 2px 0 #8b0000;
+      transform: translateY(2px);
+    }
+    .option.disabled {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .explanation-popup {
+      background: #ece3ca;
+      border-right: 12px solid #b0854b;
+      border-radius: 32px;
+      padding: 25px 30px;
+      margin: 20px 0;
+      font-size: 1.3rem;
+      color: #2c2218;
+      font-weight: 500;
+      box-shadow: 0 6px 0 #7d6b4b;
+    }
+    .next-btn {
+      background: #37474f;
+      border: none;
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: white;
+      padding: 12px 50px;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #1e2b3c;
+      width: fit-content;
+      margin: 15px auto 0;
+      transition: 0.1s;
+    }
+    .next-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #1e2b3c;
+    }
+    .result-screen {
+      text-align: center;
+      background: #eceff1;
+      border-radius: 48px;
+      padding: 35px;
+    }
+    .certificate {
+      background: #fafafa;
+      border: 3px double #455a64;
+      border-radius: 48px;
+      padding: 35px;
+      font-size: 1.5rem;
+      margin-bottom: 35px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .medal {
+      font-size: 3rem;
+    }
+    .review-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 30px;
+      overflow: hidden;
+      margin: 25px 0;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    .review-table th {
+      background: #455a64;
+      color: white;
+      font-size: 1.2rem;
+      padding: 15px;
+    }
+    .review-table td {
+      border: 1px solid #b0bec5;
+      padding: 14px;
+      font-size: 1.1rem;
+      background: #ffffff;
+    }
+    .footer {
+      background: #1e2b3c;
+      color: #b0bec5;
+      padding: 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border-top: 2px solid #455a64;
+    }
+    .hidden {
+      display: none;
+    }
+    .btn-review {
+      background: #2c3e50;
+      color: white;
+      border: none;
+      font-size: 1.4rem;
+      padding: 14px 35px;
+      border-radius: 60px;
+      margin: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #1a252f;
+      transition: 0.1s;
+    }
+    .btn-review:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #1a252f;
+    }
+    .motivation {
+      background: #cfd8dc;
+      font-size: 1.8rem;
+      padding: 40px;
+      border-radius: 60px;
+      color: #1e2b3c;
+    }
+  </style>
+</head>
+<body>
+<div class="app-container" id="appContainer">
+  <header>
+    <div class="institution-area">
+      <span class="uni-logo">📚</span>
+      <span class="uni-name">الأمن السيبراني   </span>
+    </div>
+    <div class="lecturer-badge">محمود عباس</div>
+  </header>
+
+  <div class="main-content" id="mainContent">
+    <!-- شاشة البداية -->
+    <div id="welcomeScreen" class="welcome-screen">
+      <div style="font-size: 2.8rem; margin-bottom: 5px; color:#2c3e50;">🔐</div>
+      <h1 style="color: #1e2b3c; font-size: 2.2rem; margin-bottom: 10px;">اختبار الكتروني – مقدمة في الأمن السيبراني</h1>
+      <p style="font-size: 1.3rem; color: #37474f;">يرجى إدخال اسمك الرباعي ثم اختيار المحور</p>
+      <div class="input-group">
+        <label>👤 اسم الطالب / الطالبة</label>
+        <input type="text" id="studentName" class="student-input" placeholder="مثال: عبدالله محمد السالم" autocomplete="off">
+      </div>
+      <h2 style="color: #263238;">المحاور المتاحة</h2>
+      <div class="topics-panel" id="topicsPanel"></div>
+    </div>
+
+    <!-- شاشة الاختبار -->
+    <div id="quizScreen" class="hidden">
+      <div class="quiz-header">
+        <span id="topicTitleDisplay"></span>
+        <span class="timer" id="timerDisplay">⏱ 60</span>
+        <span class="score" id="scoreDisplay">🏅 0</span>
+      </div>
+      <div class="question-box">
+        <div class="question-text" id="questionText"></div>
+      </div>
+      <div id="optionsContainer" class="options-grid"></div>
+      <div id="explanationBox" class="explanation-popup hidden"></div>
+      <button id="nextButton" class="next-btn hidden">▶ التالي</button>
+    </div>
+
+    <!-- شاشة النتيجة -->
+    <div id="resultScreen" class="hidden result-screen">
+      <div id="certificateArea"></div>
+      <button id="reviewBtn" class="btn-review">📋 مراجعة الإجابات</button>
+      <button id="restartBtn" class="btn-review" style="background-color: #546e7a;">🔄 اختبار جديد</button>
+      <div id="reviewTableContainer" class="hidden"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+  </footer>
+</div>
+
+<script>
+  (function() {
+    // ---------- بنك الأسئلة ----------
+    const q1 = {
+      text: "من هو المبتكر الذي وضع إطار 'مكعب الأمن السيبراني'؟",
+      options: ["آلن تورينج", "جون ماكومبر", "روبرت كاين", "كيفن ميتنيك"],
+      correct: 1,
+      explanation: "جون ماكومبر (John McCumber) صمم مكعب الأمن السيبراني (McCumber cube) لتحليل وتصنيف آليات الأمن."
+    };
+    const q2 = {
+      text: "يهدف البعد الأول لمكعب الأمن السيبراني (CIA Triad) إلى حماية:",
+      options: ["التكنولوجيا", "المبادئ الثلاثة الرئيسية لأمن المعلومات", "الأجهزة والبرامج", "القوانين والتشريعات"],
+      correct: 1,
+      explanation: "ثالوث CIA: السرية (Confidentiality)، التكامل (Integrity)، والتوافر (Availability)."
+    };
+    const q3 = {
+      text: "أي من الحالات التالية تصف البيانات أثناء انتقالها عبر الشبكة؟",
+      options: ["بيانات المخزنة (Storage)", "بيانات المعالجة (Processing)", "بيانات الإرسال (Transmission)", "البيانات المحذوفة"],
+      correct: 2,
+      explanation: "بيانات الإرسال (data in transit) هي التي تنتقل عبر وسيط الشبكة."
+    };
+    const q4 = {
+      text: "مصطلح 'السرية' (Confidentiality) في أمن المعلومات يعني:",
+      options: ["دقة وتناسق البيانات", "بقاء النظام متاحاً للمستخدمين", "منع الإفصاح عن المعلومات إلا للمصرح لهم", "تشفير الملفات الشخصية فقط"],
+      correct: 2,
+      explanation: "السرية تضمان عدم إطلاع غير المخولين على المعلومات."
+    };
+    const q5 = {
+      text: "تصنف أرقام السجلات الطبية وأرقام البطاقات الائتمانية ضمن:",
+      options: ["معلومات الأعمال", "معلومات التعريف الشخصية (PII)", "المعلومات العامة", "المعلومات المصنفة 'مفيد'"],
+      correct: 1,
+      explanation: "PII (Personally Identifiable Information) هي أي بيانات يمكن من خلالها التعرف على هوية شخص."
+    };
+    const q6 = {
+      text: "ما هي المكونات الثلاثة في مبدأ 'AAA' للتحكم في الوصول؟",
+      options: ["مساواة، مشاركة، محاسبة", "مصادقة، تفويض، محاسبة", "مراقبة، حماية، صيانة", "مراجعة، مصداقية، مزامنة"],
+      correct: 1,
+      explanation: "AAA: Authentication (مصادقة), Authorization (تفويض), Accounting (محاسبة)."
+    };
+    const q7 = {
+      text: "استخدام بصمة الإصبع للتحقق من الهوية يندرج تحت نوع المصادقة:",
+      options: ["شيء تعرفه (كلمة مرور)", "شيء تملكه (بطاقة)", "شيء أنت عليه (قياس حيوي)", "شيء تفعله (توقيع)"],
+      correct: 2,
+      explanation: "المصادقة البيومترية تعتمد على 'something you are' مثل البصمة، شبكية العين، التعرف على الوجه."
+    };
+    const q8 = {
+      text: "عملية 'التفويض' (Authorization) تهدف إلى:",
+      options: ["التأكد من هوية المستخدم", "تحديد الصلاحيات والموارد المسموح بها", "مراقبة تحركات المستخدم", "تشفير قاعدة البيانات"],
+      correct: 1,
+      explanation: "بعد المصادقة، يأتي التفويض ليحدد مستوى الوصول والصلاحيات."
+    };
+    const q9 = {
+      text: "يُعرف 'التكامل' (Integrity) في أمن المعلومات بأنه:",
+      options: ["سرية البيانات التامة", "سرعة الوصول للمعلومات", "دقة البيانات واتساقها طوال دورة حياتها", "إخفاء البيانات عن المنافسين"],
+      correct: 2,
+      explanation: "التكامل يعني حماية البيانات من التعديل غير المصرح به، والحفاظ على صحتها."
+    };
+    const q10 = {
+      text: "تُستخدم خوارزميات الهاش (Hashing) مثل MD5 وSHA-256 للتأكد من:",
+      options: ["سرية الملفات", "تكامل البيانات (Integrity)", "توافر الخدمة", "قوة كلمة المرور"],
+      correct: 1,
+      explanation: "دوال الهاش تنتج قيمة ثابتة (digest) لأي تغيير في البيانات؛ تستخدم لضمان التكامل."
+    };
+    const q11 = {
+      text: "هجمات حجب الخدمة (DoS) تستهدف بشكل مباشر مبدأ:",
+      options: ["السرية", "التكامل", "التوافر (Availability)", "الخصوصية"],
+      correct: 2,
+      explanation: "هجمات DoS/DDoS تهدف إلى جعل الخدمة غير متاحة للمستخدمين الشرعيين."
+    };
+    const q12 = {
+      text: "'إزالة نقاط الفشل المفردة' (eliminating single points of failure) هي وسيلة لضمان:",
+      options: ["التكامل العالي", "التوافر العالي (High Availability)", "السرية التامة", "التشفير القوي"],
+      correct: 1,
+      explanation: "بتكرار المكونات الحيوية نمنع توقف النظام عند فشل عنصر واحد (توافر عالي)."
+    };
+    const q13 = {
+      text: "البعد الثالث لمكعب الأمن السيبراني الذي يشمل (التقنية، السياسات، الأفراد) يسمى:",
+      options: ["حالات البيانات", "مبادئ الأمن", "ضمانات الحماية (Countermeasures)", "خدمات الأمن"],
+      correct: 2,
+      explanation: "مكعب ماكومبر يتكون من: حالات البيانات، مبادئ الأمن، وضمانات الحماية (تقنيات، سياسات، بشر)."
+    };
+    const q14 = {
+      text: "أي من القوانين التالية يختص بحماية الخصوصية في الولايات المتحدة؟",
+      options: ["قانون الهاش العالمي", "قانون حماية خصوصية الأطفال (COPPA)", "قانون التوافر الرقمي", "المادة 8 الأوروبية"],
+      correct: 1,
+      explanation: "COPPA (Children's Online Privacy Protection Act) يحمي خصوصية الأطفال تحت 13 عاماً."
+    };
+    const q15 = {
+      text: "تعني 'المحاسبة/المتابعة' (Accounting) في مبدأ AAA:",
+      options: ["دفع رسوم الخدمة", "تتبع أنشطة المستخدمين وتسجيلها", "تغيير كلمات المرور دورياً", "منح صلاحيات القراءة فقط"],
+      correct: 1,
+      explanation: "المحاسبة (Accounting) هي تسجيل الدخول والخروج والموارد المستخدمة لأغراض المراجعة (Audit)."
+    };
+
+    // تجميع الأسئلة حسب التصنيف (3 محاور)
+    const topics = {
+      "🔒 أساسيات الأمن (CIA Triad)": [q1, q2, q3, q4, q9, q10, q11, q12, q13],
+      "🔑 التحكم بالوصول (AAA)": [q6, q7, q8, q15],
+      "🛡️ الخصوصية والحماية القانونية": [q5, q14]
+    };
+
+    // متغيرات الحالة
+    let currentTopic = "";
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let studentName = "";
+    let userAnswers = [];
+    let timerInterval = null;
+    let timeLeft = 60;
+    let answerLock = false;
+
+    const nextButton = document.getElementById('nextButton');
+    const explanationBox = document.getElementById('explanationBox');
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const quizScreen = document.getElementById('quizScreen');
+    const resultScreen = document.getElementById('resultScreen');
+    const topicsPanel = document.getElementById('topicsPanel');
+    const studentNameInput = document.getElementById('studentName');
+    const topicTitleDisplay = document.getElementById('topicTitleDisplay');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const certificateArea = document.getElementById('certificateArea');
+    const reviewTableContainer = document.getElementById('reviewTableContainer');
+    const reviewBtn = document.getElementById('reviewBtn');
+    const restartBtn = document.getElementById('restartBtn');
+
+    // بناء أزرار المحاور
+    function buildTopics() {
+      topicsPanel.innerHTML = "";
+      for (let topic in topics) {
+        let btn = document.createElement('button');
+        btn.className = 'topic-btn';
+        btn.textContent = topic;
+        btn.addEventListener('click', () => startQuiz(topic));
+        topicsPanel.appendChild(btn);
+      }
+    }
+    buildTopics();
+
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startQuiz(topic) {
+      const name = studentNameInput.value.trim();
+      if (name === "") {
+        alert("يرجى إدخال اسم الطالب قبل بدء الاختبار.");
+        return;
+      }
+      studentName = name;
+      currentTopic = topic;
+      currentQuestions = shuffleArray([...topics[topic]]);
+      currentIndex = 0;
+      score = 0;
+      userAnswers = [];
+      answerLock = false;
+      updateScore();
+
+      welcomeScreen.classList.add('hidden');
+      resultScreen.classList.add('hidden');
+      quizScreen.classList.remove('hidden');
+      topicTitleDisplay.textContent = topic;
+
+      loadQuestion(currentIndex);
+    }
+
+    function loadQuestion(index) {
+      if (timerInterval) clearInterval(timerInterval);
+      answerLock = false;
+      const q = currentQuestions[index];
+      questionText.textContent = q.text;
+      optionsContainer.innerHTML = "";
+      q.options.forEach((opt, i) => {
+        const optDiv = document.createElement('div');
+        optDiv.className = 'option';
+        optDiv.textContent = `${String.fromCharCode(65 + i)}. ${opt}`;  // A. B. C. D.
+        optDiv.dataset.index = i;
+        optDiv.addEventListener('click', (e) => handleAnswer(e, q.correct, i));
+        optionsContainer.appendChild(optDiv);
+      });
+      timeLeft = 60;
+      timerDisplay.textContent = `⏱ ${timeLeft}`;
+      startTimer();
+      explanationBox.classList.add('hidden');
+      nextButton.classList.add('hidden');
+    }
+
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        if (answerLock) return;
+        timeLeft--;
+        timerDisplay.textContent = `⏱ ${timeLeft}`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerDisplay.textContent = `⏱ 0`;
+          if (!answerLock) {
+            answerLock = true;
+            const q = currentQuestions[currentIndex];
+            highlightCorrectOnly(q.correct);
+            explanationBox.textContent = "⏰ انتهى الوقت! " + q.explanation;
+            explanationBox.classList.remove('hidden');
+            nextButton.classList.remove('hidden');
+            userAnswers.push({
+              question: q.text,
+              selected: "لم يُجب",
+              correct: q.options[q.correct],
+              explanation: q.explanation
+            });
+          }
+        }
+      }, 1000);
+    }
+
+    function handleAnswer(event, correctIdx, selectedIdx) {
+      if (answerLock) return;
+      answerLock = true;
+      clearInterval(timerInterval);
+
+      const q = currentQuestions[currentIndex];
+      const allOptions = document.querySelectorAll('.option');
+      const isCorrect = (selectedIdx === correctIdx);
+
+      allOptions.forEach((opt, idx) => {
+        opt.classList.add('disabled');
+        if (idx === correctIdx) {
+          opt.classList.add('correct');
+        } else if (idx === selectedIdx && idx !== correctIdx) {
+          opt.classList.add('wrong');
+        }
+      });
+
+      userAnswers.push({
+        question: q.text,
+        selected: q.options[selectedIdx],
+        correct: q.options[correctIdx],
+        explanation: q.explanation
+      });
+
+      if (isCorrect) {
+        score++;
+        updateScore();
+        explanationBox.classList.add('hidden');
+      } else {
+        explanationBox.textContent = "❌ " + q.explanation;
+        explanationBox.classList.remove('hidden');
+      }
+
+      nextButton.classList.remove('hidden');
+    }
+
+    function highlightCorrectOnly(correctIdx) {
+      const allOptions = document.querySelectorAll('.option');
+      allOptions.forEach((opt, idx) => {
+        opt.classList.add('disabled');
+        if (idx === correctIdx) opt.classList.add('correct');
+      });
+    }
+
+    function updateScore() {
+      scoreDisplay.textContent = `🏅 ${score}`;
+    }
+
+    nextButton.addEventListener('click', () => {
+      if (currentIndex + 1 < currentQuestions.length) {
+        currentIndex++;
+        loadQuestion(currentIndex);
+      } else {
+        finishQuiz();
+      }
+    });
+
+    function finishQuiz() {
+      clearInterval(timerInterval);
+      quizScreen.classList.add('hidden');
+      resultScreen.classList.remove('hidden');
+      const total = currentQuestions.length;
+      const percent = (score / total) * 100;
+      const rounded = Math.round(percent * 10) / 10;
+
+      let certHtml = "";
+      if (percent >= 85) {
+        certHtml = `
+          <div class="certificate">
+            <div class="medal">🎓 ✅</div>
+            <h2>شهادة إتمام بنجاح</h2>
+            <p>الطالب: ${studentName}</p>
+            <p>المحور: ${currentTopic}</p>
+            <p>الدرجة: ${score} / ${total} (${rounded}%)</p>
+            <h3 style="color: #1e5f6b;">تقدير: امتياز</h3>
+          </div>
+        `;
+      } else {
+        certHtml = `
+          <div class="motivation">
+            📚 يمكنك تحسين النتيجة. حاول مجدداً<br>
+            درجتك: ${score} / ${total} (${rounded}%)<br>
+            <span style="font-size:1.5rem;">راجع المادة العلمية ثم أعد الاختبار</span>
+          </div>
+        `;
+      }
+      certificateArea.innerHTML = certHtml;
+      reviewTableContainer.classList.add('hidden');
+    }
+
+    reviewBtn.addEventListener('click', () => {
+      if (userAnswers.length === 0) return;
+      let tableHtml = `
+        <table class="review-table">
+          <tr><th>السؤال</th><th>إجابة الطالب</th><th>الإجابة الصحيحة</th><th>شرح</th></tr>
+      `;
+      userAnswers.forEach(ans => {
+        tableHtml += `<tr>
+          <td>${ans.question}</td>
+          <td style="color: #b13e3e;">${ans.selected}</td>
+          <td style="color: #1f7a1f;">${ans.correct}</td>
+          <td>${ans.explanation}</td>
+        </tr>`;
+      });
+      tableHtml += `</table>`;
+      reviewTableContainer.innerHTML = tableHtml;
+      reviewTableContainer.classList.remove('hidden');
+    });
+
+    restartBtn.addEventListener('click', () => {
+      clearInterval(timerInterval);
+      welcomeScreen.classList.remove('hidden');
+      quizScreen.classList.add('hidden');
+      resultScreen.classList.add('hidden');
+    });
+  })();
+</script>
+</body>
+</html>
