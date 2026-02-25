@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>📘 تقييم متقدم في الأمن السيبراني</title>
+  <title>📘 اختبار الأمن السيبراني  </title>
   <style>
     * {
       margin: 0;
@@ -105,31 +105,24 @@
       border-color: #1e2b3c;
       box-shadow: 0 0 0 3px rgba(30,43,60,0.2);
     }
-    .topics-panel {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 40px;
-    }
-    .topic-btn {
+    .start-btn {
       background: #2c3e50;
       color: white;
       border: none;
-      padding: 18px 32px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      border-radius: 60px;
+      padding: 18px 50px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      border-radius: 80px;
       cursor: pointer;
-      box-shadow: 0 5px 0 #1a252f;
+      box-shadow: 0 8px 0 #1a252f;
       transition: 0.1s ease;
-      flex: 0 1 auto;
-      min-width: 240px;
-      border: 1px solid #90a4ae;
+      margin: 30px auto;
+      border: 2px solid #90a4ae;
+      display: inline-block;
     }
-    .topic-btn:active {
-      transform: translateY(3px);
-      box-shadow: 0 2px 0 #1a252f;
+    .start-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 3px 0 #1a252f;
     }
     .quiz-header {
       display: flex;
@@ -173,7 +166,6 @@
       color: #102027;
       line-height: 1.5;
     }
-    /* تعديل شبكة الخيارات لتكون 4 أعمدة على الكبير، 2 على المتوسط، 1 على الصغير */
     .options-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -194,15 +186,15 @@
       background: #dde3e9;
       border: 2px solid #607d8b;
       border-radius: 60px;
-      padding: 12px 15px;   /* تصغير الحشو */
-      font-size: 1.1rem;    /* تصغير الخط قليلاً */
+      padding: 12px 15px;
+      font-size: 1.1rem;
       font-weight: 500;
       color: #1c313a;
       cursor: pointer;
       transition: 0.1s;
       box-shadow: 0 4px 0 #3e5a6b;
       text-align: right;
-      word-break: break-word; /* لتفادي تجاوز النص */
+      word-break: break-word;
     }
     .option.correct {
       background: #a5d6a5;
@@ -330,30 +322,29 @@
   <header>
     <div class="institution-area">
       <span class="uni-logo">📚</span>
-      <span class="uni-name">الأمن السيبراني   </span>
+      <span class="uni-name">تقييم الأمن السيبراني</span>
     </div>
-    <div class="lecturer-badge">محمود عباس</div>
+    <div class="lecturer-badge"> محمود عباس</div>
   </header>
 
   <div class="main-content" id="mainContent">
     <!-- شاشة البداية -->
     <div id="welcomeScreen" class="welcome-screen">
       <div style="font-size: 2.8rem; margin-bottom: 5px; color:#2c3e50;">🔐</div>
-      <h1 style="color: #1e2b3c; font-size: 2.2rem; margin-bottom: 10px;">اختبار الكتروني – مقدمة في الأمن السيبراني</h1>
-      <p style="font-size: 1.3rem; color: #37474f;">يرجى إدخال اسمك الرباعي ثم اختيار المحور</p>
+      <h1 style="color: #1e2b3c; font-size: 2.2rem; margin-bottom: 10px;">اختبار شامل في الأمن السيبراني</h1>
+      <p style="font-size: 1.3rem; color: #37474f;">يرجى إدخال اسمك ثم البدء</p>
       <div class="input-group">
-        <label>👤 اسم الطالب / </label>
-        <input type="text" id="studentName" class="student-input" placeholder="مثال: عبدالله محمد السالم" autocomplete="off">
+        <label>👤 اسم الطالب  </label>
+        <input type="text" id="studentName" class="student-input" placeholder="اكتب اسمك" autocomplete="off">
       </div>
-      <h2 style="color: #263238;">المحاور المتاحة</h2>
-      <div class="topics-panel" id="topicsPanel"></div>
+      <button id="startQuizBtn" class="start-btn">▶ ابدأ الاختبار</button>
     </div>
 
     <!-- شاشة الاختبار -->
     <div id="quizScreen" class="hidden">
       <div class="quiz-header">
-        <span id="topicTitleDisplay"></span>
-        <span class="timer" id="timerDisplay">⏱ 60</span>
+        <span>📋 أسئلة عشوائية</span>
+        <span class="timer" id="timerDisplay">⏱ 30</span>
         <span class="score" id="scoreDisplay">🏅 0</span>
       </div>
       <div class="question-box">
@@ -374,151 +365,134 @@
   </div>
 
   <footer class="footer">
+    الأمن السيبراني |  محمود عباس
   </footer>
 </div>
 
 <script>
   (function() {
-    // ---------- بنك الأسئلة ----------
-    const q1 = {
-      text: "من هو المبتكر الذي وضع إطار 'مكعب الأمن السيبراني'؟",
-      options: ["آلن تورينج", "جون ماكومبر", "روبرت كاين", "كيفن ميتنيك"],
-      correct: 1,
-      explanation: "جون ماكومبر (John McCumber) صمم مكعب الأمن السيبراني (McCumber cube) لتحليل وتصنيف آليات الأمن."
-    };
-    const q2 = {
-      text: "يهدف البعد الأول لمكعب الأمن السيبراني (CIA Triad) إلى حماية:",
-      options: ["التكنولوجيا", "المبادئ الثلاثة الرئيسية لأمن المعلومات", "الأجهزة والبرامج", "القوانين والتشريعات"],
-      correct: 1,
-      explanation: "ثالوث CIA: السرية (Confidentiality)، التكامل (Integrity)، والتوافر (Availability)."
-    };
-    const q3 = {
-      text: "أي من الحالات التالية تصف البيانات أثناء انتقالها عبر الشبكة؟",
-      options: ["بيانات المخزنة (Storage)", "بيانات المعالجة (Processing)", "بيانات الإرسال (Transmission)", "البيانات المحذوفة"],
-      correct: 2,
-      explanation: "بيانات الإرسال (data in transit) هي التي تنتقل عبر وسيط الشبكة."
-    };
-    const q4 = {
-      text: "مصطلح 'السرية' (Confidentiality) في أمن المعلومات يعني:",
-      options: ["دقة وتناسق البيانات", "بقاء النظام متاحاً للمستخدمين", "منع الإفصاح عن المعلومات إلا للمصرح لهم", "تشفير الملفات الشخصية فقط"],
-      correct: 2,
-      explanation: "السرية تضمان عدم إطلاع غير المخولين على المعلومات."
-    };
-    const q5 = {
-      text: "تصنف أرقام السجلات الطبية وأرقام البطاقات الائتمانية ضمن:",
-      options: ["معلومات الأعمال", "معلومات التعريف الشخصية (PII)", "المعلومات العامة", "المعلومات المصنفة 'مفيد'"],
-      correct: 1,
-      explanation: "PII (Personally Identifiable Information) هي أي بيانات يمكن من خلالها التعرف على هوية شخص."
-    };
-    const q6 = {
-      text: "ما هي المكونات الثلاثة في مبدأ 'AAA' للتحكم في الوصول؟",
-      options: ["مساواة، مشاركة، محاسبة", "مصادقة، تفويض، محاسبة", "مراقبة، حماية، صيانة", "مراجعة، مصداقية، مزامنة"],
-      correct: 1,
-      explanation: "AAA: Authentication (مصادقة), Authorization (تفويض), Accounting (محاسبة)."
-    };
-    const q7 = {
-      text: "استخدام بصمة الإصبع للتحقق من الهوية يندرج تحت نوع المصادقة:",
-      options: ["شيء تعرفه (كلمة مرور)", "شيء تملكه (بطاقة)", "شيء أنت عليه (قياس حيوي)", "شيء تفعله (توقيع)"],
-      correct: 2,
-      explanation: "المصادقة البيومترية تعتمد على 'something you are' مثل البصمة، شبكية العين، التعرف على الوجه."
-    };
-    const q8 = {
-      text: "عملية 'التفويض' (Authorization) تهدف إلى:",
-      options: ["التأكد من هوية المستخدم", "تحديد الصلاحيات والموارد المسموح بها", "مراقبة تحركات المستخدم", "تشفير قاعدة البيانات"],
-      correct: 1,
-      explanation: "بعد المصادقة، يأتي التفويض ليحدد مستوى الوصول والصلاحيات."
-    };
-    const q9 = {
-      text: "يُعرف 'التكامل' (Integrity) في أمن المعلومات بأنه:",
-      options: ["سرية البيانات التامة", "سرعة الوصول للمعلومات", "دقة البيانات واتساقها طوال دورة حياتها", "إخفاء البيانات عن المنافسين"],
-      correct: 2,
-      explanation: "التكامل يعني حماية البيانات من التعديل غير المصرح به، والحفاظ على صحتها."
-    };
-    const q10 = {
-      text: "تُستخدم خوارزميات الهاش (Hashing) مثل MD5 وSHA-256 للتأكد من:",
-      options: ["سرية الملفات", "تكامل البيانات (Integrity)", "توافر الخدمة", "قوة كلمة المرور"],
-      correct: 1,
-      explanation: "دوال الهاش تنتج قيمة ثابتة (digest) لأي تغيير في البيانات؛ تستخدم لضمان التكامل."
-    };
-    const q11 = {
-      text: "هجمات حجب الخدمة (DoS) تستهدف بشكل مباشر مبدأ:",
-      options: ["السرية", "التكامل", "التوافر (Availability)", "الخصوصية"],
-      correct: 2,
-      explanation: "هجمات DoS/DDoS تهدف إلى جعل الخدمة غير متاحة للمستخدمين الشرعيين."
-    };
-    const q12 = {
-      text: "'إزالة نقاط الفشل المفردة' (eliminating single points of failure) هي وسيلة لضمان:",
-      options: ["التكامل العالي", "التوافر العالي (High Availability)", "السرية التامة", "التشفير القوي"],
-      correct: 1,
-      explanation: "بتكرار المكونات الحيوية نمنع توقف النظام عند فشل عنصر واحد (توافر عالي)."
-    };
-    const q13 = {
-      text: "البعد الثالث لمكعب الأمن السيبراني الذي يشمل (التقنية، السياسات، الأفراد) يسمى:",
-      options: ["حالات البيانات", "مبادئ الأمن", "ضمانات الحماية (Countermeasures)", "خدمات الأمن"],
-      correct: 2,
-      explanation: "مكعب ماكومبر يتكون من: حالات البيانات، مبادئ الأمن، وضمانات الحماية (تقنيات، سياسات، بشر)."
-    };
-    const q14 = {
-      text: "أي من القوانين التالية يختص بحماية الخصوصية في الولايات المتحدة؟",
-      options: ["قانون الهاش العالمي", "قانون حماية خصوصية الأطفال (COPPA)", "قانون التوافر الرقمي", "المادة 8 الأوروبية"],
-      correct: 1,
-      explanation: "COPPA (Children's Online Privacy Protection Act) يحمي خصوصية الأطفال تحت 13 عاماً."
-    };
-    const q15 = {
-      text: "تعني 'المحاسبة/المتابعة' (Accounting) في مبدأ AAA:",
-      options: ["دفع رسوم الخدمة", "تتبع أنشطة المستخدمين وتسجيلها", "تغيير كلمات المرور دورياً", "منح صلاحيات القراءة فقط"],
-      correct: 1,
-      explanation: "المحاسبة (Accounting) هي تسجيل الدخول والخروج والموارد المستخدمة لأغراض المراجعة (Audit)."
-    };
-
-    // تجميع الأسئلة حسب التصنيف (3 محاور)
-    const topics = {
-      "🔒 أساسيات الأمن (CIA Triad)": [q1, q2, q3, q4, q9, q10, q11, q12, q13],
-      "🔑 التحكم بالوصول (AAA)": [q6, q7, q8, q15],
-      "🛡️ الخصوصية والحماية القانونية": [q5, q14]
-    };
+    // ---------- جميع الأسئلة (15 سؤالاً) ----------
+    const allQuestions = [
+      {
+        text: "من هو المبتكر الذي وضع إطار 'مكعب الأمن السيبراني'؟",
+        options: ["آلن تورينج", "جون ماكومبر", "روبرت كاين", "كيفن ميتنيك"],
+        correct: 1,
+        explanation: "جون ماكومبر (John McCumber) صمم مكعب الأمن السيبراني (McCumber cube) لتحليل وتصنيف آليات الأمن."
+      },
+      {
+        text: "يهدف البعد الأول لمكعب الأمن السيبراني (CIA Triad) إلى حماية:",
+        options: ["التكنولوجيا", "المبادئ الثلاثة الرئيسية لأمن المعلومات", "الأجهزة والبرامج", "القوانين والتشريعات"],
+        correct: 1,
+        explanation: "ثالوث CIA: السرية (Confidentiality)، التكامل (Integrity)، والتوافر (Availability)."
+      },
+      {
+        text: "أي من الحالات التالية تصف البيانات أثناء انتقالها عبر الشبكة؟",
+        options: ["بيانات المخزنة (Storage)", "بيانات المعالجة (Processing)", "بيانات الإرسال (Transmission)", "البيانات المحذوفة"],
+        correct: 2,
+        explanation: "بيانات الإرسال (data in transit) هي التي تنتقل عبر وسيط الشبكة."
+      },
+      {
+        text: "مصطلح 'السرية' (Confidentiality) في أمن المعلومات يعني:",
+        options: ["دقة وتناسق البيانات", "بقاء النظام متاحاً للمستخدمين", "منع الإفصاح عن المعلومات إلا للمصرح لهم", "تشفير الملفات الشخصية فقط"],
+        correct: 2,
+        explanation: "السرية تضمان عدم إطلاع غير المخولين على المعلومات."
+      },
+      {
+        text: "تصنف أرقام السجلات الطبية وأرقام البطاقات الائتمانية ضمن:",
+        options: ["معلومات الأعمال", "معلومات التعريف الشخصية (PII)", "المعلومات العامة", "المعلومات المصنفة 'مفيد'"],
+        correct: 1,
+        explanation: "PII (Personally Identifiable Information) هي أي بيانات يمكن من خلالها التعرف على هوية شخص."
+      },
+      {
+        text: "ما هي المكونات الثلاثة في مبدأ 'AAA' للتحكم في الوصول؟",
+        options: ["مساواة، مشاركة، محاسبة", "مصادقة، تفويض، محاسبة", "مراقبة، حماية، صيانة", "مراجعة، مصداقية، مزامنة"],
+        correct: 1,
+        explanation: "AAA: Authentication (مصادقة), Authorization (تفويض), Accounting (محاسبة)."
+      },
+      {
+        text: "استخدام بصمة الإصبع للتحقق من الهوية يندرج تحت نوع المصادقة:",
+        options: ["شيء تعرفه (كلمة مرور)", "شيء تملكه (بطاقة)", "شيء أنت عليه (قياس حيوي)", "شيء تفعله (توقيع)"],
+        correct: 2,
+        explanation: "المصادقة البيومترية تعتمد على 'something you are' مثل البصمة، شبكية العين، التعرف على الوجه."
+      },
+      {
+        text: "عملية 'التفويض' (Authorization) تهدف إلى:",
+        options: ["التأكد من هوية المستخدم", "تحديد الصلاحيات والموارد المسموح بها", "مراقبة تحركات المستخدم", "تشفير قاعدة البيانات"],
+        correct: 1,
+        explanation: "بعد المصادقة، يأتي التفويض ليحدد مستوى الوصول والصلاحيات."
+      },
+      {
+        text: "يُعرف 'التكامل' (Integrity) في أمن المعلومات بأنه:",
+        options: ["سرية البيانات التامة", "سرعة الوصول للمعلومات", "دقة البيانات واتساقها طوال دورة حياتها", "إخفاء البيانات عن المنافسين"],
+        correct: 2,
+        explanation: "التكامل يعني حماية البيانات من التعديل غير المصرح به، والحفاظ على صحتها."
+      },
+      {
+        text: "تُستخدم خوارزميات الهاش (Hashing) مثل MD5 وSHA-256 للتأكد من:",
+        options: ["سرية الملفات", "تكامل البيانات (Integrity)", "توافر الخدمة", "قوة كلمة المرور"],
+        correct: 1,
+        explanation: "دوال الهاش تنتج قيمة ثابتة (digest) لأي تغيير في البيانات؛ تستخدم لضمان التكامل."
+      },
+      {
+        text: "هجمات حجب الخدمة (DoS) تستهدف بشكل مباشر مبدأ:",
+        options: ["السرية", "التكامل", "التوافر (Availability)", "الخصوصية"],
+        correct: 2,
+        explanation: "هجمات DoS/DDoS تهدف إلى جعل الخدمة غير متاحة للمستخدمين الشرعيين."
+      },
+      {
+        text: "'إزالة نقاط الفشل المفردة' (eliminating single points of failure) هي وسيلة لضمان:",
+        options: ["التكامل العالي", "التوافر العالي (High Availability)", "السرية التامة", "التشفير القوي"],
+        correct: 1,
+        explanation: "بتكرار المكونات الحيوية نمنع توقف النظام عند فشل عنصر واحد (توافر عالي)."
+      },
+      {
+        text: "البعد الثالث لمكعب الأمن السيبراني الذي يشمل (التقنية، السياسات، الأفراد) يسمى:",
+        options: ["حالات البيانات", "مبادئ الأمن", "ضمانات الحماية (Countermeasures)", "خدمات الأمن"],
+        correct: 2,
+        explanation: "مكعب ماكومبر يتكون من: حالات البيانات، مبادئ الأمن، وضمانات الحماية (تقنيات، سياسات، بشر)."
+      },
+      {
+        text: "أي من القوانين التالية يختص بحماية الخصوصية في الولايات المتحدة؟",
+        options: ["قانون الهاش العالمي", "قانون حماية خصوصية الأطفال (COPPA)", "قانون التوافر الرقمي", "المادة 8 الأوروبية"],
+        correct: 1,
+        explanation: "COPPA (Children's Online Privacy Protection Act) يحمي خصوصية الأطفال تحت 13 عاماً."
+      },
+      {
+        text: "تعني 'المحاسبة/المتابعة' (Accounting) في مبدأ AAA:",
+        options: ["دفع رسوم الخدمة", "تتبع أنشطة المستخدمين وتسجيلها", "تغيير كلمات المرور دورياً", "منح صلاحيات القراءة فقط"],
+        correct: 1,
+        explanation: "المحاسبة (Accounting) هي تسجيل الدخول والخروج والموارد المستخدمة لأغراض المراجعة (Audit)."
+      }
+    ];
 
     // متغيرات الحالة
-    let currentTopic = "";
-    let currentQuestions = [];
+    let currentQuestions = [];      // النسخة المخلوطة
     let currentIndex = 0;
     let score = 0;
     let studentName = "";
     let userAnswers = [];
     let timerInterval = null;
-    let timeLeft = 60;
+    let timeLeft = 30;              // 30 ثانية
     let answerLock = false;
 
-    const nextButton = document.getElementById('nextButton');
-    const explanationBox = document.getElementById('explanationBox');
+    // عناصر واجهة
     const welcomeScreen = document.getElementById('welcomeScreen');
     const quizScreen = document.getElementById('quizScreen');
     const resultScreen = document.getElementById('resultScreen');
-    const topicsPanel = document.getElementById('topicsPanel');
     const studentNameInput = document.getElementById('studentName');
-    const topicTitleDisplay = document.getElementById('topicTitleDisplay');
+    const startBtn = document.getElementById('startQuizBtn');
     const timerDisplay = document.getElementById('timerDisplay');
     const scoreDisplay = document.getElementById('scoreDisplay');
     const questionText = document.getElementById('questionText');
     const optionsContainer = document.getElementById('optionsContainer');
+    const explanationBox = document.getElementById('explanationBox');
+    const nextButton = document.getElementById('nextButton');
     const certificateArea = document.getElementById('certificateArea');
     const reviewTableContainer = document.getElementById('reviewTableContainer');
     const reviewBtn = document.getElementById('reviewBtn');
     const restartBtn = document.getElementById('restartBtn');
 
-    // بناء أزرار المحاور
-    function buildTopics() {
-      topicsPanel.innerHTML = "";
-      for (let topic in topics) {
-        let btn = document.createElement('button');
-        btn.className = 'topic-btn';
-        btn.textContent = topic;
-        btn.addEventListener('click', () => startQuiz(topic));
-        topicsPanel.appendChild(btn);
-      }
-    }
-    buildTopics();
-
+    // خلط المصفوفة
     function shuffleArray(arr) {
       for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -527,15 +501,16 @@
       return arr;
     }
 
-    function startQuiz(topic) {
+    // بدء الاختبار
+    function startQuiz() {
       const name = studentNameInput.value.trim();
       if (name === "") {
-        alert("يرجى إدخال اسم الطالب قبل بدء الاختبار.");
+        alert("يرجى إدخال اسم الطالب قبل البدء.");
         return;
       }
       studentName = name;
-      currentTopic = topic;
-      currentQuestions = shuffleArray([...topics[topic]]);
+      // خلط جميع الأسئلة
+      currentQuestions = shuffleArray([...allQuestions]);
       currentIndex = 0;
       score = 0;
       userAnswers = [];
@@ -545,11 +520,11 @@
       welcomeScreen.classList.add('hidden');
       resultScreen.classList.add('hidden');
       quizScreen.classList.remove('hidden');
-      topicTitleDisplay.textContent = topic;
 
       loadQuestion(currentIndex);
     }
 
+    // تحميل السؤال
     function loadQuestion(index) {
       if (timerInterval) clearInterval(timerInterval);
       answerLock = false;
@@ -564,7 +539,7 @@
         optDiv.addEventListener('click', (e) => handleAnswer(e, q.correct, i));
         optionsContainer.appendChild(optDiv);
       });
-      timeLeft = 60;
+      timeLeft = 30;   // 30 ثانية
       timerDisplay.textContent = `⏱ ${timeLeft}`;
       startTimer();
       explanationBox.classList.add('hidden');
@@ -646,6 +621,7 @@
       scoreDisplay.textContent = `🏅 ${score}`;
     }
 
+    // زر التالي
     nextButton.addEventListener('click', () => {
       if (currentIndex + 1 < currentQuestions.length) {
         currentIndex++;
@@ -670,7 +646,6 @@
             <div class="medal">🎓 ✅</div>
             <h2>شهادة إتمام بنجاح</h2>
             <p>الطالب: ${studentName}</p>
-            <p>المحور: ${currentTopic}</p>
             <p>الدرجة: ${score} / ${total} (${rounded}%)</p>
             <h3 style="color: #1e5f6b;">تقدير: امتياز</h3>
           </div>
@@ -688,6 +663,7 @@
       reviewTableContainer.classList.add('hidden');
     }
 
+    // مراجعة الإجابات
     reviewBtn.addEventListener('click', () => {
       if (userAnswers.length === 0) return;
       let tableHtml = `
@@ -707,14 +683,23 @@
       reviewTableContainer.classList.remove('hidden');
     });
 
+    // إعادة البدء
     restartBtn.addEventListener('click', () => {
       clearInterval(timerInterval);
       welcomeScreen.classList.remove('hidden');
       quizScreen.classList.add('hidden');
       resultScreen.classList.add('hidden');
+      studentNameInput.value = studentName; // احتفظ بالاسم
+    });
+
+    // حدث بدء الاختبار
+    startBtn.addEventListener('click', startQuiz);
+
+    // (اختياري) بدء الاختبار بالضغط على Enter في حقل الاسم
+    studentNameInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') startQuiz();
     });
   })();
 </script>
 </body>
-
 </html>
